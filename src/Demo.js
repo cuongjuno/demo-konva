@@ -120,19 +120,23 @@ const Demo = () => {
                                 draggable
                             >
                                 <Rect
-                                    opacity={0.8}
+                                    opacity={1}
                                     width={widthTable}
                                     height={heightTable}
-                                    fill="red"
-                                    shadowBlur={10}
-                                    shadowColor="black"
-                                    shadowOpacity={0.6}
-                                    shadowOffsetX={table.isDragging ? 10 : 5}
-                                    shadowOffsetY={table.isDragging ? 10 : 5}
+                                    fill="white"
+                                    shadowForStrokeEnabled={true}
+                                    shadowBlur={20}
+                                    shadowColor="blue"
+                                    shadowOpacity={1}
+                                    // shadowOffset={x : 10, y : 10}
+                                    // shadowOffsetX={table.isDragging ? 10 : 5}
+                                    // shadowOffsetY={table.isDragging ? 10 : 5}
+                                    shadowOffsetX={0}
+                                    shadowOffsetY={0}
                                     scaleX={table.isDragging ? 1.2 : 1}
                                     scaleY={table.isDragging ? 1.2 : 1}
-                                    stroke='black'
-                                    strokeWidth={1}
+                                    stroke='green'
+                                    strokeWidth={3}
                                 />
                                 <Text
                                     // y={widthTable / 2.5}
@@ -143,7 +147,7 @@ const Demo = () => {
                                     height={heightTable}
                                     padding={5}
                                     text="hello i am junotaro "
-                                    fill='white'
+                                    fill='black'
                                 />
                             </Group>
                         ))}
