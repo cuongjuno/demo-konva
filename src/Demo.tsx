@@ -1,16 +1,11 @@
 
 import React, { useState } from 'react';
+import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import TableCircle, { ITableProps } from './CollapseShape/TableCircle';
 
 const Demo = () => {
-    const [disabled, setDisabled] = useState(false);
-    const [isDraggableParent, setIsDraggableParent] = useState(false);
-
-    const toggleDraggable = () => {
-        setDisabled(!disabled)
-    }
-
+    const wrapperRef = useRef(null);
     const TableConfig: ITableProps[] = [
         {
             type: "Rectangle",
@@ -295,15 +290,16 @@ const Demo = () => {
         },
         
     ]
+
     return (
         <div className="draggable-container">
-            <Draggable disabled={false} bounds="parent">
-                <div className="draggable-area">
+            <Draggable bounds="parent">
+                <div className="draggable-area"  ref={wrapperRef}>
                     {
                         TableConfig.map((tableProps: ITableProps) => {
                             console.log(tableProps.position.x)
                             return (
-                                <Draggable disabled={disabled} bounds="parent" defaultPosition={{x: tableProps.position.x, y: tableProps.position.y}}>
+                                <Draggable onStart={(e) => e.stopPropagation()} bounds="parent" defaultPosition={{x: tableProps.position.x, y: tableProps.position.y}}>
                                     <div className="draggable-wrap"><TableCircle {...tableProps} /></div>
                                 </Draggable>
                             )
