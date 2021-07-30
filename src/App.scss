@@ -1,11 +1,8 @@
-@import "./DraggableTable.scss";
-@import "./CollapseShape/TableCircle/TableCircle.scss";
-.root-demo {
-    display: flex;
-    margin-top: 100px;
-    // .controller {
-    //     // width: ;
-    // }
-    // .board {
-    // }
+@import './DraggableTable.scss';
+@import './CollapseShape/TableCircle/TableCircle.scss';
+.big-conatainer {
+    min-height: 100vh;
+    .control {
+        border-right: 1px solid;
+    }
 }

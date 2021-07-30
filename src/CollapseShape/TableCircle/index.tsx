@@ -12,47 +12,79 @@ export interface IPositionProps {
 }
 
 export interface ITableProps {
-    type: "Circle" | "Rectangle";
+    idTable: number | string;
+    shape: 'circle' | 'rectangle';
     chairs: IChairProps[];
     startTime: Date;
     endTime: Date;
     tableName: string;
     position: IPositionProps;
-    tableNameColor: string;
+    tableNameColor?: string;
 }
 const TableCircle = (props: ITableProps) => {
     const getPercentTimeUsed = () => {
-        const differenceTimeTable = (endTime.getTime() - startTime.getTime()) / 60000;
-        const differenceWithCurrentTime = (new Date().getTime() - startTime.getTime()) / 60000;
-        return Math.round((differenceWithCurrentTime / differenceTimeTable) * 100);
-    }
-    const { type, chairs, tableName, startTime, endTime, tableNameColor } = props;
-    const [percentTimeUsed, setPercentTimeUsed] = useState(getPercentTimeUsed());
-    let idInterval: any;
+        const differenceTimeTable =
+            (endTime.getTime() - startTime.getTime()) / 60000;
+        const differenceWithCurrentTime =
+            (new Date().getTime() - startTime.getTime()) / 60000;
+        return Math.round(
+            (differenceWithCurrentTime / differenceTimeTable) * 100
+        );
+    };
+    const {
+        shape,
+        chairs,
+        tableName,
+        startTime,
+        endTime,
+        tableNameColor = 'rgb(69, 77, 105)',
+    } = props;
+    const [percentTimeUsed, setPercentTimeUsed] = useState(
+        getPercentTimeUsed()
+    );
     useEffect(() => {
+        let idInterval: any;
         if (percentTimeUsed < 100) {
             idInterval = setInterval(() => {
-                console.log("call")
                 const percent = getPercentTimeUsed();
                 setPercentTimeUsed(percent);
-            }, 1000)
+            }, 1000);
         }
         return () => clearInterval(idInterval);
-    }, [percentTimeUsed])
+    }, [percentTimeUsed]);
 
     return (
-        <div className="table-container">
-            <div className="table-wrapper">
-                <div className="table-name" style={{ color: tableNameColor }}>{tableName}</div>
+        <div className='table-container'>
+            <div className='table-wrapper'>
+                <div className='table-name' style={{ color: tableNameColor }}>
+                    {tableName}
+                </div>
                 {chairs.map((chair: IChairProps) => {
-                    return <div className={"chair-" + chair.id} style={{ backgroundColor: chair.color }} />
+                    return (
+                        <div
+                            className={'chair-' + chair.id}
+                            style={{ backgroundColor: chair.color }}
+                        />
+                    );
                 })}
-                <div className={"table " + (type === "Circle" ? "circle" : "")}>
-                    <div className="time-remain" style={{ height: `${100 - percentTimeUsed}%` }}></div>
-                    <div className="time-used" style={{ height: `${percentTimeUsed}%` }}></div>
+                <div
+                    className={'table ' + (shape === 'circle' ? 'circle' : '')}
+                >
+                    <div className='time-remain'>
+                        <div
+                            className='time-used'
+                            style={{
+                                transform: `translateY(${
+                                    100 - percentTimeUsed
+                                }%)`,
+                                backgroundColor: `${
+                                    percentTimeUsed >= 50 ? 'red' : '#c6e3f4'
+                                }`,
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
-            <div className="text"></div>
         </div>
     );
 };
